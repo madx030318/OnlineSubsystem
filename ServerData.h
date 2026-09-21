@@ -1,12 +1,15 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <winsock2.h>
 
 class GameServer
 {
 private:
-    int ServerSocket;
+     
+    SOCKET ServerSocket;
     bool Running;
+    int NumberofPort
 
 public:
     void Start();
