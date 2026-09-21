@@ -1,4 +1,5 @@
 #include <iostream>
+#include "ServerData.h"
 #include <string>
 #include <vector>
 
@@ -9,25 +10,55 @@ GameServer::GameServer() {
 void GameServer::Start() {
 
   Running = true;
-  ServerSocket;
   
 };
 
-void GameServer::Stop() {
+void GameServer::Start()
+{
+    Running = true;
 
-  Running = false;
-  ServerSocket = 0;
-};
-void GameServer::AcceptClient() {
+    std::cout << "Game Server started." << std::endl;
+}
 
-};
+void GameServer::Stop()
+{
+    Running = false;
+    ServerSocket = 0;
 
-void GameServer::HandleClient(){
+    std::cout << "Game Server stopped." << std::endl;
+}
+
+void GameServer::AcceptClient()
+{
+    std::cout << "Waiting for client..." << std::endl;
+}
+
+void GameServer::HandleClient()
+{
+    std::cout << "Handling client..." << std::endl;
+}
+
+void GameServer::BroadcastMessage()
+{
+    std::cout << "Broadcasting message..." << std::endl;
+}
+
 
 }
 
+int main() {
+
+  GameServer Server;
+  Server.Start();
+
+  Server.AcceptClient();
+  Server.HandleClient();
+  Server.BroadcastMessage();
+
+  Server.Stop();
+
+  return 0;
+
+
+
 }
-
-
-}
-
