@@ -33,8 +33,23 @@ void GameServer::Start()
 
   }
 
-  
+  cout << "Server bound to port " << NumberofPort << endl;
 
+  if (listen(ServerSocket, SOMAXCONN) == SOCKET_ERROR))
+  {
+    cout << "Listen failed." << endl;
+
+    closesocket(ServerSocket);
+    ServerSocket = INVALID_SOCKET;
+
+    WSACleanup();
+
+    return;
+
+  }
+
+  cout << "Server is listening." << endl;
+  bIsRunning = true;
   cout << "The Winsock is initialized" << endl;
 
   sockaddr_in ServerAddress;
@@ -49,25 +64,43 @@ void GameServer::Start()
 
 void GameServer::Stop()
 {
-    Running = false;
-    ServerSocket = 0;
+  if (ServerSocket != INVALID_SOCKET) {
 
-    std::cout << "Game Server stopped." << std::endl;
+    closesocket(ServerSocket);
+    ServerSocket = INVALID_SOCKET;
+
+  }
+
+  WSACleanup();
+
+  bIsRunning = false;
+
+  cout << "Game Server stopped. " << endl;
 }
+    
 
-void GameServer::AcceptClient()
+SOCKET GameServer::AcceptClient()
 {
-    std::cout << "Waiting for client..." << std::endl;
+  sockaddr_in ClientAddress;
+  int ClientAddressSize = sizeof(ClientAddress);
+  SOCKET ClientSocket = accept(AF_INET, ServerAddress, ClientAddressSize);
+
+  if (ClientSocket == INVALID_SOCKET)
+  {
+    cout << "Accept failed." << std::endl;
+    return INVALID_SOCKET;
+
+  }
 }
 
 void GameServer::HandleClient()
 {
-    std::cout << "Handling client..." << std::endl;
+    cout << "Handling client..." << endl;
 }
 
 void GameServer::BroadcastMessage()
 {
-    std::cout << "Broadcasting message..." << std::endl;
+    cout << "Broadcasting message..." << endl;
 }
 
 
