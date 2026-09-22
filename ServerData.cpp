@@ -2,22 +2,49 @@
 #include "ServerData.h"
 #include <string>
 #include <vector>
+using namespace std;
+#pragma comment(lib, "Ws2_32.lib")
 
 GameServer::GameServer() {
-  ServerSocket = 0;
+  ServerSocket = INVALID_SOCKET;
   Running = false;
+  NumberofPort = 8000;
 
-void GameServer::Start() {
-
-  Running = true;
-  
-};
 
 void GameServer::Start()
 {
-    Running = true;
+  WSADATA WsaD;
+  int Output = WSAStatup(MAKEWORD(2, 2), &WSaData);
 
-    std::cout << "Game Server started." << std::endl;
+  if (Output != 0) {
+    cout << "WSAStartup failed." << std::endl;
+    return;
+
+  }
+
+  ServerSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+  if  (ServerSocket == INVALID_SOCKET) {
+
+     cout << "Socket creation failed." << endl;
+
+     WSACleanup();
+     return;
+
+  }
+
+  
+
+  cout << "The Winsock is initialized" << endl;
+
+  sockaddr_in ServerAddress;
+  ServerAddress.sin_family = AF_INET;
+  ServerAddress.sin_port = htons(NumberofPort);
+  ServerAddress.sin_addr.s_addr = INADDR_ANY;
+
+  bIsRunning = true;
+
+  
 }
 
 void GameServer::Stop()
