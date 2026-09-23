@@ -16,7 +16,7 @@ public:
     void Stop();
 
     void AcceptClient();
-    void HandleClient();
+    void HandleClient(SOCKET ClientSocket);
 
     void BroadcastMessage();
 };
