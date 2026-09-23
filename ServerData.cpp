@@ -99,7 +99,13 @@ SOCKET GameServer::AcceptClient()
 
 void GameServer::HandleClient()
 {
-    cout << "Handling client..." << endl;
+    char Buffer[1024];
+
+    int BytesReceived = recv(
+        ClientSocket,
+        Buffer,
+        sizeof(Buffer) - 1,
+        0 );
 }
 
 void GameServer::BroadcastMessage()
