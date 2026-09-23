@@ -83,12 +83,16 @@ SOCKET GameServer::AcceptClient()
 {
   sockaddr_in ClientAddress;
   int ClientAddressSize = sizeof(ClientAddress);
-  SOCKET ClientSocket = accept(AF_INET, ServerAddress, ClientAddressSize);
+  SOCKET ClientSocket = accept(ServerSocket, reinterpret_cast<sockaddr*>(&ClientAddress), &ClientAddressSize);
 
   if (ClientSocket == INVALID_SOCKET)
   {
     cout << "Accept failed." << std::endl;
     return INVALID_SOCKET;
+
+    cout << "Client connected!" << std::endl;
+
+    return ClientSocket;
 
   }
 }
